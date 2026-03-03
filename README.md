@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="profile-3d-contrib/profile-night-rainbow.svg" alt="3D GitHub Contribution" width="100%">
+</div>
+
 <h1 align="center">Hi 👋, I'm Harsh Panchal</h1>
 <h3 align="center">A passionate tech enthusiast from India</h3>
 
