@@ -1,0 +1,18 @@
+{
+  "_comment": "Source for assets/trace-*.svg. Dates are YYYY-MM; end null = still running. Edit here, not in the SVG.",
+  "trace_id": "harshpanchal04",
+  "start": "2023-07",
+  "end": "2027-07",
+  "spans": [
+    {"service": "edu", "op": "cs.undergrad", "detail": "Scaler School of Technology · BITS Pilani (B.Sc. CS)", "start": "2023-07", "end": "2027-07", "depth": 0},
+    {"service": "urban-company", "op": "sde.intern", "detail": "AR visualization · C#, Unity", "start": "2024-04", "end": "2024-09", "depth": 1},
+    {"service": "piramal", "op": "big-data.intern", "detail": "Snowflake → SQL → Power BI pipeline", "start": "2024-10", "end": "2025-02", "depth": 1},
+    {"service": "ragaai", "op": "ds.intern", "detail": "Catalyst SDK (16K★): test infra, 7 framework integrations", "start": "2025-02", "end": "2025-08", "depth": 1},
+    {"service": "builds", "op": "side.projects", "detail": "AuthX · FedNet · LLD in Java · TrustLoop · HFT ring buffer", "start": "2025-11", "end": "2026-08", "depth": 1},
+    {"service": "fam", "op": "data-eng.intern", "detail": "lakehouse: Spark on EKS, Airflow, Trino, Kubernetes", "start": "2026-10", "end": null, "depth": 1}
+  ],
+  "events": [
+    {"at": "2024-07", "label": "2nd @ Accel Atoms '24"},
+    {"at": "2026-04", "label": "mentor @ Meta × HF"}
+  ]
+}

@@ -1,0 +1,63 @@
+name: Rebuild profile
+
+# Redraws the generated parts of README.md:
+#   assets/latency-*.svg  compile Market-Data-System-HFT, run scripts/bench.sh, draw the result
+#   assets/trace-*.svg    my career as a trace, from data/career.json (the "now" line moves weekly)
+#   upstream table        merged PRs to other people's repos, from the GitHub search API
+on:
+  schedule:
+    - cron: "0 3 * * 1"   # Mondays, 08:30 IST
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["scripts/**", "data/career.json", ".github/workflows/profile.yml"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile
+  cancel-in-progress: true
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Market-Data-System-HFT
+        id: hft
+        continue-on-error: true   # a broken build keeps last week's latency card
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq --no-install-recommends libboost-dev cmake g++
+          git clone --depth 1 https://github.com/harshpanchal04/Market-Data-System-HFT.git hft
+          cmake -S hft -B hft/build -DCMAKE_BUILD_TYPE=Release
+          cmake --build hft/build -j "$(nproc)"
+          (cd hft/build && ./test_tick_data)
+
+      - name: Benchmark shared memory vs TCP
+        if: steps.hft.outcome == 'success'
+        continue-on-error: true
+        run: |
+          cd hft
+          scripts/bench.sh build 20000 100 | tee ../latency.txt
+          grep -q 'RESULT path=shm' ../latency.txt && grep -q 'RESULT path=tcp' ../latency.txt
+          mv ../latency.txt ../data/latency.txt
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Redraw cards and upstream list
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/build_profile.py
+
+      - name: Commit if anything changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets data README.md
+          git diff --cached --quiet || git commit -m "chore: rebuild profile cards"
+          git push
