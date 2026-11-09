@@ -1,4 +1,4 @@
-# host: Linux x86_64, 4 CPUs, 2026-11-07T01:16Z
+# host: Linux x86_64, 4 CPUs, 2026-11-09T10:51Z
 # workload: 20000 ticks, one every 100us, first 1000 samples per path dropped as warm-up
-RESULT path=shm n=19000 mean_ns=146 min_ns=68 p50_ns=89 p90_ns=122 p99_ns=229 p999_ns=2031 max_ns=287567
-RESULT path=tcp n=19000 mean_ns=31945 min_ns=16857 p50_ns=30925 p90_ns=35508 p99_ns=50028 p999_ns=128160 max_ns=749005
+RESULT path=shm n=19000 mean_ns=129 min_ns=80 p50_ns=106 p90_ns=150 p99_ns=299 p999_ns=1824 max_ns=91866
+RESULT path=tcp n=19000 mean_ns=45555 min_ns=20991 p50_ns=35547 p90_ns=40638 p99_ns=72276 p999_ns=3974803 max_ns=7086003
